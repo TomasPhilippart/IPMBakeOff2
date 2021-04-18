@@ -174,7 +174,7 @@ function drawTarget(i)
 	if (trials[current_trial] === i) { 
 		// Highlights the target the user should be trying to select
 		// with a white border
-		fill(color(255,204,0));                 
+		fill(color(220,20,60));                 
 		stroke(color(220,220,220));
 		strokeWeight(2);
 		
