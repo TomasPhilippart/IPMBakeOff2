@@ -181,7 +181,7 @@ function drawTarget(i)
 		// Remember you are allowed to access targets (i-1) and (i+1)
 		// if this is the target the user should be trying to select
 		//
-	} else if (trials[current_trial] == i + 1) {
+	} else if (trials[current_trial+1] == i) {
 		fill(color(155,155,155));
 		noStroke();
 	} else {
