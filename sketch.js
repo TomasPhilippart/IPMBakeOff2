@@ -57,7 +57,7 @@ function draw()
 	if (draw_targets)
 	{
 		// The user is interacting with the 4x4 target grid
-		background(color(0,0,0));        // sets background to black
+		background(color(33, 33, 33));        // sets background to grey
 		
 		// Print trial count at the top left-corner of the canvas
 		fill(color(255,255,255));
