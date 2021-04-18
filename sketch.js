@@ -180,7 +180,7 @@ function drawTarget(i)
 		
 	} else if (trials[current_trial+1] == i) {
 		// Highlight next target with a similar color
-		fill(color(100,100,100));
+		fill(color(110,110,110));
 		noStroke();
 	} else {
 		// Does not draw a border if this is not the target the user
