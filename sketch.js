@@ -57,7 +57,7 @@ function draw()
 	if (draw_targets)
 	{
 		// The user is interacting with the 4x4 target grid
-		background(color(33, 33, 33));        // sets background to grey
+		background(color(30, 30, 30));        // sets background to grey
 		
 		// Print trial count at the top left-corner of the canvas
 		fill(color(255,255,255));
@@ -174,19 +174,19 @@ function drawTarget(i)
 	if (trials[current_trial] === i) { 
 		// Highlights the target the user should be trying to select
 		// with a white border
-		fill(color(220,20,60));                 
+		fill(color(50,180,20));                 
 		stroke(color(220,220,220));
-		strokeWeight(2);
+		strokeWeight(3);
 		
 	} else if (trials[current_trial+1] == i) {
 		// Highlight next target with a similar color
-		fill(color(110,110,110));
+		fill(color(220,20,60));
 		noStroke();
 	} else {
 		// Does not draw a border if this is not the target the user
 		// should be trying to select
 		noStroke();
-		fill(color(90,90,90));                 
+		fill(color(150,150,150));                 
 	}
 
 	// Draws the target
