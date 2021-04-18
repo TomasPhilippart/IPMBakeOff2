@@ -181,6 +181,9 @@ function drawTarget(i)
 		// Remember you are allowed to access targets (i-1) and (i+1)
 		// if this is the target the user should be trying to select
 		//
+	} else if (trials[current_trial] == i + 1) {
+		fill(color('magenta'));
+		noStroke();
 	} else {
 		// Does not draw a border if this is not the target the user
 		// should be trying to select
