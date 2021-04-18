@@ -178,11 +178,9 @@ function drawTarget(i)
 		stroke(color(220,220,220));
 		strokeWeight(2);
 		
-		// Remember you are allowed to access targets (i-1) and (i+1)
-		// if this is the target the user should be trying to select
-		//
 	} else if (trials[current_trial+1] == i) {
-		fill(color(155,155,155));
+		// Highlight next target with a similar color
+		fill(color(100,100,100));
 		noStroke();
 	} else {
 		// Does not draw a border if this is not the target the user
