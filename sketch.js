@@ -182,13 +182,13 @@ function drawTarget(i)
 		// if this is the target the user should be trying to select
 		//
 	} else if (trials[current_trial] == i + 1) {
-		fill(color('magenta'));
+		fill(color(155,155,155));
 		noStroke();
 	} else {
 		// Does not draw a border if this is not the target the user
 		// should be trying to select
 		noStroke();
-		fill(color(155,155,155));                 
+		fill(color(90,90,90));                 
 	}
 
 	// Draws the target
