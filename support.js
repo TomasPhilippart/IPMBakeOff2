@@ -4,8 +4,7 @@ let student_ID_form, display_size_form, start_button;                  // Initia
 let student_ID, display_size;                                          // User input parameters
 
 // Prints the initial UI that prompts that ask for student ID and screen size
-function drawUserIDScreen()
-{ 
+function drawUserIDScreen() { 
   background(color(0,0,0));                                          // sets background to black
   
   // Text prompt

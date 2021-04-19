@@ -46,6 +46,8 @@ function setup() {
 	
 	textFont("Arial", 18);     // font size for the majority of the text
 	drawUserIDScreen();        // draws the user input screen (student number and display size)
+
+	cursor(CROSS);
 }
 
 // Runs every frame and redraws the screen
@@ -90,8 +92,19 @@ function printAndSavePerformance() {
 	// Print Fitts IDS (one per target, -1 if failed selection)
 	text("Fitts Index of Performance ", width/2, 280);
 	for (var i = 0; i < fitts_IDs.length/2; i++) {
-		text("Target " + (i+1) + fitts_IDs[i], width/4, 300 + (i * 20));
-		text("Target " + (i + fitts_IDs.length/2 + 1) + ": " + fitts_IDs[i], 3 * width/4, 300 + (i * 20));
+		var messageLeft = fitts_IDs[i];
+		var messageRight = fitts_IDs[i + fitts_IDs.length/2];
+
+		if (messageLeft == -1) {
+			messageLeft = "MISSED";
+		}
+
+		if (messageRight == -1) {
+			messageRight = "MISSED";
+		}
+
+		text("Target " + (i+1) + ": " + messageLeft, width/4, 300 + (i * 20));
+		text("Target " + (i + fitts_IDs.length/2 + 1) + ": " + messageRight, 3 * width/4, 300 + (i * 20));
 	}
 	// 
 
@@ -162,6 +175,7 @@ function mousePressed()
 		} 
 	}
 }
+
 
 // Draw target on-screen
 function drawTarget(i) {
