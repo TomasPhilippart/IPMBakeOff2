@@ -27,7 +27,6 @@ let trials 			 = [];     // contains the order of targets that activate in the t
 let current_trial    = 0;      // the current trial number (indexes into trials array above)
 let attempt          = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 let fitts_IDs        = [];     // add the Fitts ID for each selection here (-1 when there is a miss)
-let target_direction = createVector(0, 0)
 
 // Target class (position and width)
 class Target {
@@ -47,9 +46,6 @@ function setup() {
 	
 	textFont("Arial", 18);     // font size for the majority of the text
 	drawUserIDScreen();        // draws the user input screen (student number and display size)
-
-	// cursor(CROSS);
-	cursor('https://www.pngjoy.com/pngm/118/2429479_green-crosshair-green-crosshair-transparent-hd-png-download.png');
 }
 
 // Runs every frame and redraws the screen
@@ -66,6 +62,8 @@ function draw() {
 		// Draw all 16 targets
 	for (var i = 0; i < 16; i++) drawTarget(i);
 	}
+
+	
 }
 
 // Print and save results at the end of 48 trials
@@ -188,9 +186,6 @@ function drawTarget(i) {
 	if (trials[current_trial] === i) { 
 		// Highlights the target the user should be trying to select
 		// with a white border
-		target_direction.set(target.x - mouseX, target.y - mouseX);
-		target_direction.normalize();
-		
 		fill(color(50,220,15));
 	} else if (trials[current_trial+1] == i) {
 		// Highlight next target with a similar color
