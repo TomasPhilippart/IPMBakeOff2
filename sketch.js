@@ -29,10 +29,8 @@ let attempt          = 0;      // users complete each test twice to account for 
 let fitts_IDs        = [];     // add the Fitts ID for each selection here (-1 when there is a miss)
 
 // Target class (position and width)
-class Target
-{
-	constructor(x, y, w)
-	{
+class Target {
+	constructor(x, y, w) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -40,8 +38,7 @@ class Target
 }
 
 // Runs once at the start
-function setup()
-{
+function setup() {
 	createCanvas(windowWidth, windowHeight);    // window size before we go into fullScreen()
 	frameRate(60);             // frame rate (DO NOT CHANGE!)
 	
@@ -52,10 +49,8 @@ function setup()
 }
 
 // Runs every frame and redraws the screen
-function draw()
-{
-	if (draw_targets)
-	{
+function draw() {
+	if (draw_targets) {
 		// The user is interacting with the 4x4 target grid
 		background(color(30, 30, 30));        // sets background to grey
 		
@@ -70,8 +65,7 @@ function draw()
 }
 
 // Print and save results at the end of 48 trials
-function printAndSavePerformance()
-{
+function printAndSavePerformance() {
 	// DO NOT CHANGE THESE! 
 	let accuracy			= parseFloat(hits * 100) / parseFloat(hits + misses);
 	let test_time         = (testEndTime - testStartTime) / 1000;
@@ -94,6 +88,11 @@ function printAndSavePerformance()
 	text("Average time for each target (+ penalty): " + target_w_penalty + "s", width/2, 220);
 	
 	// Print Fitts IDS (one per target, -1 if failed selection)
+	text("Fitts Index of Performance ", width/2, 280);
+	for (var i = 0; i < fitts_IDs.length/2; i++) {
+		text("Target " + (i+1) + fitts_IDs[i], width/4, 300 + (i * 10));
+		text("Target " + (i + fitts_IDs.length/2 + 1) + ": " + fitts_IDs[i], 3 * width/4, 300 + (i * 10));
+	}
 	// 
 
 	// Saves results (DO NOT CHANGE!)
@@ -113,11 +112,9 @@ function printAndSavePerformance()
 	}
 	
 	// Send data to DB (DO NOT CHANGE!)
-	if (BAKE_OFF_DAY)
-	{
+	if (BAKE_OFF_DAY) {
 		// Access the Firebase DB
-		if (attempt === 0)
-		{
+		if (attempt === 0) {
 			firebase.initializeApp(firebaseConfig);
 			database = firebase.database();
 		}
@@ -133,29 +130,31 @@ function mousePressed()
 {
 	// Only look for mouse releases during the actual test
 	// (i.e., during target selections)
-	if (draw_targets)
-	{
+	if (draw_targets) {
 		// Get the location and size of the target the user should be trying to select
 		let target = getTargetBounds(trials[current_trial]);   
 		
 		// Check to see if the mouse cursor is inside the target bounds,
 		// increasing either the 'hits' or 'misses' counters
-		if (dist(target.x, target.y, mouseX, mouseY) < target.w/2)  hits++;                                                       
-		else misses++;
+		if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
+			fitts_IDs.push(Math.log2(dist(target.x, target.y, mouseX, mouseY)/(target.w/2)));
+			hits++;                                                       
+		} else {
+			fitts_IDs.push(-1);
+			misses++;
+		}
 		
 		current_trial++;                 // Move on to the next trial/target
 		
 		// Check if the user has completed all 48 trials
-		if (current_trial === trials.length)
-		{
+		if (current_trial === trials.length) {
 			testEndTime = millis();
 			draw_targets = false;          // Stop showing targets and the user performance results
 			printAndSavePerformance();     // Print the user's results on-screen and send these to the DB
 			attempt++;                      
 			
 			// If there's an attempt to go create a button to start this
-			if (attempt < 2)
-			{
+			if (attempt < 2) {
 				continue_button = createButton('START 2ND ATTEMPT');
 				continue_button.mouseReleased(continueTest);
 				continue_button.position(width/2 - continue_button.size().width/2, height/2 - continue_button.size().height/2);
@@ -165,8 +164,7 @@ function mousePressed()
 }
 
 // Draw target on-screen
-function drawTarget(i)
-{
+function drawTarget(i) {
 	// Get the location and size for target (i)
 	let target = getTargetBounds(i);             
 
@@ -174,18 +172,13 @@ function drawTarget(i)
 	if (trials[current_trial] === i) { 
 		// Highlights the target the user should be trying to select
 		// with a white border
-		fill(color(50,220,15));                 
-		stroke(color(220,220,220));
-		strokeWeight(3);
-		
+		fill(color(50,220,15));
 	} else if (trials[current_trial+1] == i) {
 		// Highlight next target with a similar color
 		fill(color(130,30,30));
-		noStroke();
 	} else {
 		// Does not draw a border if this is not the target the user
 		// should be trying to select
-		noStroke();
 		fill(color(150,150,150));                 
 	}
 
@@ -194,8 +187,7 @@ function drawTarget(i)
 }
 
 // Returns the location and size of a given target
-function getTargetBounds(i)
-{
+function getTargetBounds(i) {
 	var x = parseInt(LEFT_PADDING) + parseInt((i % 4) * (TARGET_SIZE + TARGET_PADDING) + MARGIN);
 	var y = parseInt(TOP_PADDING) + parseInt(Math.floor(i / 4) * (TARGET_SIZE + TARGET_PADDING) + MARGIN);
 
@@ -203,8 +195,7 @@ function getTargetBounds(i)
 }
 
 // Evoked after the user starts its second (and last) attempt
-function continueTest()
-{
+function continueTest() {
 	// Re-randomize the trial order
 	shuffle(trials, true);
 	current_trial = 0;
@@ -223,8 +214,7 @@ function continueTest()
 }
 
 // Is invoked when the canvas is resized (e.g., when we go fullscreen)
-function windowResized() 
-{
+function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
 		
 	let display    = new Display({ diagonal: display_size }, window.screen);
