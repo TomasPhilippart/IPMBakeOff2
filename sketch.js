@@ -66,8 +66,6 @@ function draw() {
 		// Draw all 16 targets
 	for (var i = 0; i < 16; i++) drawTarget(i);
 	}
-
-	draw
 }
 
 // Print and save results at the end of 48 trials
@@ -192,7 +190,6 @@ function drawTarget(i) {
 		// with a white border
 		target_direction.set(target.x - mouseX, target.y - mouseX);
 		target_direction.normalize();
-		
 		
 		fill(color(50,220,15));
 	} else if (trials[current_trial+1] == i) {
