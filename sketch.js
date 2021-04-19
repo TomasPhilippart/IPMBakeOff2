@@ -27,6 +27,7 @@ let trials 			 = [];     // contains the order of targets that activate in the t
 let current_trial    = 0;      // the current trial number (indexes into trials array above)
 let attempt          = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 let fitts_IDs        = [];     // add the Fitts ID for each selection here (-1 when there is a miss)
+let target_direction = createVector(0, 0)
 
 // Target class (position and width)
 class Target {
