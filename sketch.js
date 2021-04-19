@@ -48,7 +48,8 @@ function setup() {
 	textFont("Arial", 18);     // font size for the majority of the text
 	drawUserIDScreen();        // draws the user input screen (student number and display size)
 
-	cursor(CROSS);
+	// cursor(CROSS);
+	cursor('https://www.pngjoy.com/pngm/118/2429479_green-crosshair-green-crosshair-transparent-hd-png-download.png');
 }
 
 // Runs every frame and redraws the screen
@@ -189,10 +190,11 @@ function drawTarget(i) {
 	if (trials[current_trial] === i) { 
 		// Highlights the target the user should be trying to select
 		// with a white border
-		fill(color(50,220,15));
-		
 		target_direction.set(target.x - mouseX, target.y - mouseX);
 		target_direction.normalize();
+		
+		
+		fill(color(50,220,15));
 	} else if (trials[current_trial+1] == i) {
 		// Highlight next target with a similar color
 		fill(color(130,30,30));
