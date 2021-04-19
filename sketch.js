@@ -150,8 +150,8 @@ function mousePressed()
 		// Check to see if the mouse cursor is inside the target bounds,
 		// increasing either the 'hits' or 'misses' counters
 		if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
-			fitts_IDs.push(Math.log2(dist(target.x, target.y, mouseX, mouseY)/(target.w/2)));
-			hits++;                                                       
+			fitts_IDs.push(parseFloat(Math.log2(dist(target.x, target.y, mouseX, mouseY)/(target.w/2).toFixed(3))));
+			hits++;
 		} else {
 			fitts_IDs.push(-1);
 			misses++;
