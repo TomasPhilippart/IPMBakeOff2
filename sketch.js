@@ -90,8 +90,8 @@ function printAndSavePerformance() {
 	// Print Fitts IDS (one per target, -1 if failed selection)
 	text("Fitts Index of Performance ", width/2, 280);
 	for (var i = 0; i < fitts_IDs.length/2; i++) {
-		text("Target " + (i+1) + fitts_IDs[i], width/4, 300 + (i * 10));
-		text("Target " + (i + fitts_IDs.length/2 + 1) + ": " + fitts_IDs[i], 3 * width/4, 300 + (i * 10));
+		text("Target " + (i+1) + fitts_IDs[i], width/4, 300 + (i * 20));
+		text("Target " + (i + fitts_IDs.length/2 + 1) + ": " + fitts_IDs[i], 3 * width/4, 300 + (i * 20));
 	}
 	// 
 
