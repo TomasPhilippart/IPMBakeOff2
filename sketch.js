@@ -65,6 +65,8 @@ function draw() {
 		// Draw all 16 targets
 	for (var i = 0; i < 16; i++) drawTarget(i);
 	}
+
+	draw
 }
 
 // Print and save results at the end of 48 trials
@@ -104,8 +106,8 @@ function printAndSavePerformance() {
 			messageRight = "MISSED";
 		}
 
-		text("Target " + (i+1) + ": " + messageLeft, width/4, 300 + (i * 20));
-		text("Target " + (i + fitts_IDs.length/2 + 1) + ": " + messageRight, 3 * width/4, 300 + (i * 20));
+		text("Target " + (i+1) + ": " + messageLeft, width/4, 320 + (i * 20));
+		text("Target " + (i + fitts_IDs.length/2 + 1) + ": " + messageRight, 3 * width/4, 320 + (i * 20));
 	}
 	// 
 
@@ -151,7 +153,7 @@ function mousePressed()
 		// Check to see if the mouse cursor is inside the target bounds,
 		// increasing either the 'hits' or 'misses' counters
 		if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
-			fitts_IDs.push(parseFloat(Math.log2(dist(target.x, target.y, mouseX, mouseY)/(target.w/2).toFixed(3))));
+			fitts_IDs.push(parseFloat(Math.log2(1 + dist(target.x, target.y, mouseX, mouseY) / target.w).toFixed(3)));
 			hits++;
 		} else {
 			fitts_IDs.push(-1);
@@ -188,6 +190,9 @@ function drawTarget(i) {
 		// Highlights the target the user should be trying to select
 		// with a white border
 		fill(color(50,220,15));
+		
+		target_direction.set(target.x - mouseX, target.y - mouseX);
+		target_direction.normalize();
 	} else if (trials[current_trial+1] == i) {
 		// Highlight next target with a similar color
 		fill(color(130,30,30));
