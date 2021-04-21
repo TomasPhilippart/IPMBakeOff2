@@ -27,6 +27,10 @@ let trials 			 = [];     // contains the order of targets that activate in the t
 let current_trial    = 0;      // the current trial number (indexes into trials array above)
 let attempt          = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 let fitts_IDs        = [];     // add the Fitts ID for each selection here (-1 when there is a miss)
+let diametro         = 0;
+let posX             = 0;
+let posY             = 0;
+
 
 // Target class (position and width)
 class Target {
@@ -61,7 +65,18 @@ function draw() {
 		textAlign(LEFT);
 		text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
 
-		// Draw all 16 targets
+		fill(color(30,30,30));
+		stroke(color(150,150,150));
+		strokeWeight(3);
+		circle(posX, posY, diametro);
+
+		if (diametro > 0) {
+			diametro = diametro - 1.75;
+		}
+		
+		noStroke();
+		
+	// Draw all 16 targets
 	for (var i = 0; i < 16; i++) drawTarget(i);
 	}
 }
@@ -159,11 +174,19 @@ function mousePressed()
 			fitts_IDs.push(-1);
 			misses++;
 
-			error.stop();
+			sucess.stop();
 			error.play();
 		}
 		
 		current_trial++;                 // Move on to the next trial/target
+
+		if(current_trial < trials.length){
+			animation = getTargetBounds(trials[current_trial]);
+			
+			diametro = animation.w * 1.7;
+			posX = animation.x;
+			posY = animation.y
+		}
 		
 		// Check if the user has completed all 48 trials
 		if (current_trial === trials.length) {
@@ -187,30 +210,50 @@ function mousePressed()
 function drawTarget(i) {
 	// Get the location and size for target (i)
 	let isHovering = false;
-	let target = getTargetBounds(i); 
+	let target = getTargetBounds(i);
+	
+	// Color scheme
+	let targetColor = color(50,220,15);
+	let nextColor = color(95,140,90);
+	let neutralColor = color(150,150,150);
+	let highlight = color(255,255,255,100);
 	
 	if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
 		isHovering = true; 
 	}
 
 	// Check whether this target is the target the user should be trying to select
-	if (trials[current_trial] == i) { 
+	if (trials[current_trial] === i) { 
 		// Highlights the target the user should be trying to select
 		// with a white border
-		fill(color(50,220,15));
-	} else if (trials[current_trial+1] == i) {
+		fill(targetColor);
+	} else if (trials[current_trial+1] === i) {
 		// Highlight next target with a similar color
-		fill(color(130,30,30));
+		fill(nextColor);
 	} else {
 		// Does not draw a border if this is not the target the user
 		// should be trying to select
-		fill(color(150,150,150));                 
+		fill(neutralColor);                 
 	}
 
 	// Draws the target
 	circle(target.x, target.y, target.w);
-	if(isHovering && trials[current_trial] == i){
-		fill(color(255,255,255,100));  
+
+	// Overlap
+	if(trials[current_trial+1] === i && trials[current_trial] === i){
+		fill(nextColor);
+		circle(target.x, target.y,  target.w/2);
+	}
+
+	// No Overlap
+	else if(trials[current_trial+1] === i && trials[current_trial] != i){
+		fill(neutralColor);
+		circle(target.x, target.y, (3*target.w)/4);
+	}
+
+	
+	if(isHovering && trials[current_trial] === i){
+		fill(highlight);  
 		circle(target.x, target.y, target.w);
 	}
 }
