@@ -45,6 +45,8 @@ function setup() {
 	randomizeTrials();         // randomize the trial order at the start of execution
 	
 	textFont("Arial", 18);     // font size for the majority of the text
+	sucess = loadSound('sounds/accept.mp3');
+	error = loadSound('sounds/error.mp3');
 	drawUserIDScreen();        // draws the user input screen (student number and display size)
 }
 
@@ -58,12 +60,10 @@ function draw() {
 		fill(color(255,255,255));
 		textAlign(LEFT);
 		text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
-		
+
 		// Draw all 16 targets
 	for (var i = 0; i < 16; i++) drawTarget(i);
 	}
-
-	
 }
 
 // Print and save results at the end of 48 trials
@@ -152,9 +152,13 @@ function mousePressed()
 		if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
 			fitts_IDs.push(parseFloat(Math.log2(1 + dist(target.x, target.y, mouseX, mouseY) / target.w).toFixed(3)));
 			hits++;
+			
+			sucess.play();
 		} else {
 			fitts_IDs.push(-1);
 			misses++;
+			
+			error.play();
 		}
 		
 		current_trial++;                 // Move on to the next trial/target
@@ -180,10 +184,15 @@ function mousePressed()
 // Draw target on-screen
 function drawTarget(i) {
 	// Get the location and size for target (i)
-	let target = getTargetBounds(i);             
+	let isHovering = false;
+	let target = getTargetBounds(i); 
+	
+	if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
+		isHovering = true; 
+	}
 
 	// Check whether this target is the target the user should be trying to select
-	if (trials[current_trial] === i) { 
+	if (trials[current_trial] == i) { 
 		// Highlights the target the user should be trying to select
 		// with a white border
 		fill(color(50,220,15));
@@ -198,6 +207,10 @@ function drawTarget(i) {
 
 	// Draws the target
 	circle(target.x, target.y, target.w);
+	if(isHovering && trials[current_trial] == i){
+		fill(color(255,255,255,100));  
+		circle(target.x, target.y, target.w);
+	}
 }
 
 // Returns the location and size of a given target
