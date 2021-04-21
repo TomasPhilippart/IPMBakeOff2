@@ -31,6 +31,9 @@ let diametro         = 0;
 let posX             = 0;
 let posY             = 0;
 
+let prevMouseX		 = 0;
+let prevMouseY       = 0;
+
 
 // Target class (position and width)
 class Target {
@@ -107,14 +110,18 @@ function printAndSavePerformance() {
 	// Print Fitts IDS (one per target, -1 if failed selection)
 	text("Fitts Index of Performance ", width/2, 280);
 	for (var i = 0; i < fitts_IDs.length/2; i++) {
-		var messageLeft = fitts_IDs[i];
-		var messageRight = fitts_IDs[i + fitts_IDs.length/2];
+		var messageLeft = str(fitts_IDs[i]).padEnd(5, '0');
+		var messageRight = str(fitts_IDs[i + fitts_IDs.length/2]).padEnd(5, '0');
 
-		if (messageLeft == -1) {
+		if(i == 0){
+			messageLeft = "---";
+		}
+
+		if (messageLeft == '-1000') {
 			messageLeft = "MISSED";
 		}
 
-		if (messageRight == -1) {
+		if (messageRight == '-1000') {
 			messageRight = "MISSED";
 		}
 
@@ -161,11 +168,12 @@ function mousePressed()
 	if (draw_targets) {
 		// Get the location and size of the target the user should be trying to select
 		let target = getTargetBounds(trials[current_trial]);   
-		
+	
+
 		// Check to see if the mouse cursor is inside the target bounds,
 		// increasing either the 'hits' or 'misses' counters
 		if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
-			fitts_IDs.push(parseFloat(Math.log2(1 + dist(target.x, target.y, mouseX, mouseY) / target.w).toFixed(3)));
+			fitts_IDs.push(parseFloat(Math.log2(1 + dist(prevMouseX, prevMouseY, mouseX, mouseY) / target.w).toFixed(3)));
 			hits++;
 
 			sucess.stop();
@@ -177,7 +185,9 @@ function mousePressed()
 			sucess.stop();
 			error.play();
 		}
-		
+		prevMouseX = mouseX;
+		prevMouseY = mouseY;
+
 		current_trial++;                 // Move on to the next trial/target
 
 		if(current_trial < trials.length){
