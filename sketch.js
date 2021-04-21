@@ -152,12 +152,14 @@ function mousePressed()
 		if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
 			fitts_IDs.push(parseFloat(Math.log2(1 + dist(target.x, target.y, mouseX, mouseY) / target.w).toFixed(3)));
 			hits++;
-			
+
+			sucess.stop();
 			sucess.play();
 		} else {
 			fitts_IDs.push(-1);
 			misses++;
-			
+
+			error.stop();
 			error.play();
 		}
 		
