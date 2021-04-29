@@ -225,7 +225,7 @@ function drawTarget(i) {
 	let targetColor = color(50,220,15);
 	let nextColor = color(95,140,90);
 	let neutralColor = color(150,150,150);
-	let highlight = color(255,255,255,100);
+	let highlight = color(255, 219, 88, 150);
 	
 	if (dist(target.x, target.y, mouseX, mouseY) < target.w/2) {
 		isHovering = true; 
