@@ -47,12 +47,13 @@ class Target {
 // Runs once at the start
 function setup() {
 	createCanvas(windowWidth, windowHeight);    // window size before we go into fullScreen()
+	cursor('crosshair24.png', 12, 12);
 	frameRate(60);             // frame rate (DO NOT CHANGE!)
 	
 	randomizeTrials();         // randomize the trial order at the start of execution
 	
 	textFont("Arial", 18);     // font size for the majority of the text
-	sucess = loadSound('sounds/accept.mp3');
+	success = loadSound('sounds/accept.mp3');
 	error = loadSound('sounds/error.mp3');
 	drawUserIDScreen();        // draws the user input screen (student number and display size)
 }
@@ -80,8 +81,7 @@ function draw() {
 		noStroke();
 		
 	// Draw all 16 targets
-	for (var i = 0; i < 16; i++) drawTarget(i);
-	}
+	for (var i = 0; i < 16; i++) drawTarget(i); }
 }
 
 // Print and save results at the end of 48 trials
@@ -161,8 +161,7 @@ function printAndSavePerformance() {
 }
 
 // Mouse button was pressed - lets test to see if hit was in the correct target
-function mousePressed() 
-{
+function mousePressed() {
 	// Only look for mouse releases during the actual test
 	// (i.e., during target selections)
 	if (draw_targets) {
@@ -176,13 +175,13 @@ function mousePressed()
 			fitts_IDs.push(parseFloat(Math.log2(1 + dist(prevMouseX, prevMouseY, mouseX, mouseY) / target.w).toFixed(3)));
 			hits++;
 
-			sucess.stop();
-			sucess.play();
+			success.stop();
+			success.play();
 		} else {
 			fitts_IDs.push(-1);
 			misses++;
 
-			sucess.stop();
+			success.stop();
 			error.play();
 		}
 		prevMouseX = mouseX;
