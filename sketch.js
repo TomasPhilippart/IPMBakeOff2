@@ -70,11 +70,13 @@ function draw() {
 		text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
 
 		fill(color(30,30,30));
-		stroke(color(150,150,150));
+		stroke(color(255,255,255));
 		strokeWeight(3);
 		circle(posX, posY, diametro);
 
-		if (diametro > 0) {
+		let target = getTargetBounds(trials[current_trial]); 
+		
+		if (diametro > target.w + 3) {
 			diametro = diametro - 1.75;
 		}
 		
@@ -250,8 +252,11 @@ function drawTarget(i) {
 
 	// Overlap
 	if(trials[current_trial+1] === i && trials[current_trial] === i){
-		fill(nextColor);
-		circle(target.x, target.y,  target.w/2);
+		textAlign(CENTER, CENTER);
+		fill(255);
+		text('x2', target.x, target.y);
+		//fill(nextColor);
+		//circle(target.x, target.y,  target.w/2);
 	}
 
 	// No Overlap
